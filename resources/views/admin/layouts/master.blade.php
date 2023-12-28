@@ -58,6 +58,8 @@
   <script src="{{ asset('admin/assets/js/stisla.js') }}"></script>
 
   <script src="{{ asset('admin/assets/js/toastr.min.js') }}"></script>
+  <script src="{{ asset('admin/assets/modules/upload-preview/assets/js/jquery.uploadPreview.min.js') }}"></script>
+
 
   <!-- Template JS File -->
   <script src="{{ asset('admin/assets/js/scripts.js') }}"></script>
@@ -72,5 +74,18 @@
             @endforeach
         @endif
   </script>
+  <script>
+    $.uploadPreview({
+      input_field: "#image-upload",
+      preview_box: "#image-preview",
+      label_field: "#image-label",
+      label_default: "Choose File",
+      label_selected: "Change File",
+      no_label: false,
+      success_callback: null
+    });
+  </script>
+
+  @stack('scripts')
 </body>
 </html>
