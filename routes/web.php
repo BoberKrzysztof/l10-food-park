@@ -28,6 +28,8 @@ Route::group(['middleware' => 'auth'], function () {
         ->name('dashboard');
     Route::put('profile', [ProfileController::class, 'updateProfile'])
         ->name('profile.update');
+    Route::put('profile/password', [ProfileController::class, 'updatePassword'])
+        ->name('profile.password.update');
 });
 
 Route::get('/', [FrontendController::class, 'index'])
