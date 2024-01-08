@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Product Gallery ({{ $product->name }})</h1>
+            <h1>Products Gallery ({{ $product->name }})</h1>
         </div>
 
         <div>
