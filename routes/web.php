@@ -36,7 +36,12 @@ Route::group(['middleware' => 'auth'], function () {
         ->name('profile.avatar.update');
 });
 
+require __DIR__.'/auth.php';
+
+/** Show Home Page */
 Route::get('/', [FrontendController::class, 'index'])
     ->name('home');
 
-require __DIR__.'/auth.php';
+/** Show Product Details Page */
+Route::get('/product/{slug}', [FrontendController::class, 'showProduct'])
+    ->name('product.show');
