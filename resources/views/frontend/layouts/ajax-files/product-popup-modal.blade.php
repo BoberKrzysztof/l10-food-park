@@ -74,7 +74,7 @@
             </div>
         </div>
         <ul class="details_button_area d-flex flex-wrap">
-            <li><button type="submit" class="common_btn">add to cart</button></li>
+            <li><button type="submit" class="common_btn modal_cart_button">add to cart</button></li>
         </ul>
     </div>
 </form>
@@ -137,16 +137,36 @@
         // Add to cart function
         $("#modal_add_to_cart_form").on('submit', function(e){
             e.preventDefault();
+
+            // Validation
+            let selectedSize = $("input[name='product_size']");
+            if(selectedSize.length > 0){
+                if($("input[name='product_size']:checked").val() === undefined){
+                    toastr.error('Please select a size');
+                    console.error('Please select a size');
+                    return;
+                }
+            }
+
             let formData = $(this).serialize();
             $.ajax({
                 method: 'POST',
                 url: '{{ route("add-to-cart") }}',
                 data: formData,
+                beforeSend: function(){
+                    $('.modal_cart_button').attr('disabled', true);
+                    $('.modal_cart_button').html('<span class="spinner-border spinner-border-sm text-light" aria-hidden="true"></span> Loading...')
+                },
                 success: function(response){
-
+                    toastr.success(response.message);
                 },
                 error: function(xhr, status, error){
-                    console.error(error);
+                    let errorMessage = xhr.responseJson.message;
+                    toastr.error(errorMessage);
+                },
+                complete: function(){
+                    $('.modal_cart_button').html('Add To Cart');
+                    $('.modal_cart_button').attr('disabled', false);
                 }
             })
         })
