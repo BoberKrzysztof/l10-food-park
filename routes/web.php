@@ -57,3 +57,6 @@ Route::post('add-to-cart', [CartController::class, 'addToCart'])
 
 Route::get('get-cart-products', [CartController::class, 'getCartProduct'])
     ->name('get-cart-products');
+
+Route::get('cart-product-remove/{rowId}', [CartController::class, 'cartProductRemove'])
+    ->name('cart-product-remove');

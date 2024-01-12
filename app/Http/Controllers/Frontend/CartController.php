@@ -7,6 +7,7 @@ use App\Models\Product;
 use Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\View\View;
 
 class CartController extends Controller
 {
@@ -60,9 +61,18 @@ class CartController extends Controller
         }
     }
 
-    function getCartProduct() : Collection
+    function getCartProduct()
     {
-        $products = Cart::content();
-        return $products;
+        return view('frontend.layouts.ajax-files.sidebar-cart-item')->render();
+    }
+
+    function cartProductRemove($rowId)
+    {
+        try {
+            Cart::remove($rowId);
+            return response(['status' => 'success', 'message' => 'Item has been removed!'], 200);
+        } catch (\Exception $e) {
+            return response(['status' => 'error', 'message' => 'Something went wrong!'], 500);
+        }
     }
 }
