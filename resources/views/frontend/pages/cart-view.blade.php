@@ -131,14 +131,23 @@
                     let inputField = $(this).siblings(".quantity");
                     let currentValue = parseInt(inputField.val());
                     let rowId = inputField.data("id");
+
                     inputField.val(currentValue + 1);
 
                     cartQtyUpdate(rowId, inputField.val(), function(response){
-                        let productTotal = response.product_total;
-                        inputField.closest("tr")
-                            .find(".product_cart_total")
-                            .text("{{ currencyPosition(":productTotal") }}"
-                            .replace(":productTotal", productTotal));
+                        if(response.status === 'success'){
+                            inputField.val(response.qty);
+
+                            let productTotal = response.product_total;
+                            inputField.closest("tr")
+                                .find(".product_cart_total")
+                                .text("{{ currencyPosition(":productTotal") }}"
+                                .replace(":productTotal", productTotal));
+                        } else if (response.status === 'error'){
+                            inputField.val(response.qty);
+                            toastr.error(response.message);
+                        }
+                        
                     });
                 });
 
@@ -147,15 +156,23 @@
                     let currentValue = parseInt(inputField.val());
                     let rowId = inputField.data("id");
 
+                    inputField.val(currentValue - 1);
+
                     if(inputField.val() > 1){
-                        inputField.val(currentValue - 1);
 
                         cartQtyUpdate(rowId, inputField.val(), function(response){
-                            let productTotal = response.product_total;
-                            inputField.closest("tr")
-                                .find(".product_cart_total")
-                                .text("{{ currencyPosition(":productTotal") }}"
-                                .replace(":productTotal", productTotal));
+                            if(response.status === 'success'){
+                                inputField.val(response.qty);
+    
+                                let productTotal = response.product_total;
+                                inputField.closest("tr")
+                                    .find(".product_cart_total")
+                                    .text("{{ currencyPosition(":productTotal") }}"
+                                    .replace(":productTotal", productTotal));
+                            } else if(response.status === 'error'){
+                                inputField.val(response.qty);
+                                toastr.error(response.message);
+                            }
                         });
                     }
                 });
@@ -178,8 +195,8 @@
                         },
                         error: function(xhr, status, error) {
                             let errorMessage = xhr.responseJson.message;
-                            hideLoader();
                             toastr.error(errorMessage);
+                            hideLoader();
                         },
                         complete: function() {
                             hideLoader();

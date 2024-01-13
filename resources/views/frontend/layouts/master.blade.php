@@ -146,7 +146,7 @@
 
         @if ($errors->any())
             @foreach ($errors->all() as $error)
-                toastr.error("{{ $error }}")
+                toastr.error("{{ $error }}");
             @endforeach
         @endif
 
@@ -156,6 +156,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
     </script>
 
     <!-- Load global js -->
