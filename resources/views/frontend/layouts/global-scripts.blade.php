@@ -1,5 +1,16 @@
 <script>
 
+/** Show Loader */
+function showLoader(){
+    $('.overlay-container').removeClass('d-none');
+    $('.overlay').addClass('active');
+}
+
+/** Hide Loader */
+function hideLoader(){
+    $('.overlay').removeClass('active');
+    $('.overlay-container').addClass('d-none');
+}
 /** Load product modal */
 function loadProductModal(productId){
     $.ajax({
@@ -69,4 +80,5 @@ function removeProductFromSidebar($rowId){
         }
     })
 }
+
 </script>
