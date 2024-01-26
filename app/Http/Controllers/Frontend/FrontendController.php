@@ -81,13 +81,26 @@ class FrontendController extends Controller
         }
 
         if ($coupon->discount_type === 'percent') {
-            $discount = $subtotal * ($coupon->discount / 100);
+            $discount = number_format($subtotal * ($coupon->discount / 100), 2);
         } elseif ($coupon->discount_type === 'amount') {
-            $discount = $coupon->discount;
+            $discount = number_format($coupon->discount, 2);
         }
 
         $finalTotal = $subtotal - $discount;
 
-        return response(['message' => 'Coupon Applied Successfully!', 'discount' => $discount, 'finalTotal' => $finalTotal]);
+        session()->put('coupon', ['code' => $code, 'discount' => $discount]);
+
+        return response(['message' => 'Coupon Applied Successfully!', 'discount' => $discount, 'finalTotal' => $finalTotal, 'coupon_code' => $code]);
+    }
+
+    function destroyCoupon()
+    {
+        try {
+            session()->forget('coupon');
+            return response(['message' => 'Coupon Removed!', 'grant_cart_total' => grandCartTotal()]);
+        } catch (\Exception $e) {
+            logger($e);
+            return response(['message' => 'Something went wrong!']);
+        }
     }
 }
