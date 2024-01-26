@@ -35,6 +35,8 @@ Route::group(['middleware' => 'auth'], function () {
         ->name('profile.password.update');
     Route::post('profile/avatar', [ProfileController::class, 'updateAvatar'])
         ->name('profile.avatar.update');
+    Route::post('address', [DashboardController::class, 'createAddress'])
+        ->name('address.store');
 });
 
 require __DIR__.'/auth.php';
