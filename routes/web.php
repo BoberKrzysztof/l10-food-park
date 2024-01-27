@@ -37,6 +37,10 @@ Route::group(['middleware' => 'auth'], function () {
         ->name('profile.avatar.update');
     Route::post('address', [DashboardController::class, 'createAddress'])
         ->name('address.store');
+    Route::put('address/{id}/edit', [DashboardController::class, 'updateAddress'])
+        ->name('address.update');
+    Route::delete('address/{id}', [DashboardController::class, 'destroyAddress'])
+        ->name('address.destroy');
 });
 
 require __DIR__.'/auth.php';
