@@ -162,7 +162,7 @@
                         @endif
                         <p class="total"><span>total:</span> <span id="grand_total">{{ currencyPosition(grandCartTotal()) }}</span></p>
 
-                        <a class="common_btn" href=" #">checkout</a>
+                        <a class="common_btn" id="proceed_pmt_button" href=" #">Proceed to Payment</a>
                     </div>
                 </div>
             </div>
@@ -190,8 +190,39 @@
                         showLoader();
                     },
                     success: function(response){
-                        deliveryFee.text("{{ currencyPosition(':amount') }}".replace(":amount", response.delivery_fee));
-                        grandTotal.text("{{ currencyPosition(':amount') }}".replace(":amount", response.grand_total));
+                        deliveryFee.text("{{ currencyPosition(':amount') }}".replace(":amount", response.delivery_fee.toFixed(2)));
+                        grandTotal.text("{{ currencyPosition(':amount') }}".replace(":amount", response.grand_total.toFixed(2)));
+                    },
+                    error: function(xhr, status, error){
+                        let errorMessage = xhr.responseJSON.message;
+                        toastr.success(errorMessage);
+                    },
+                    complete: function(){
+                        hideLoader();
+                    }
+                })
+            })
+
+            $('#proceed_pmt_button').on('click', function(e){
+                e.preventDefault();
+                let address = $('.v_address:checked');
+
+                if(address.length === 0){
+                    toastr.error('Please Select a Address!');
+                    return;
+                }
+
+                $.ajax({
+                    method: 'POST',
+                    url: '{{ route("checkout.redirect") }}',
+                    data: {
+                        id: address.val()
+                    },
+                    beforeSend: function(){
+                        showLoader();
+                    },
+                    success: function(response){
+                        window.location.href = response.redirect_url;
                     },
                     error: function(xhr, status, error){
                         let errorMessage = xhr.responseJSON.message;

@@ -234,7 +234,7 @@
                             }
                         },
                         error: function(xhr, status, error) {
-                            let errorMessage = xhr.responseJson.message;
+                            let errorMessage = xhr.responseJSON.message;
                             toastr.error(errorMessage);
                             hideLoader();
                         },
@@ -267,7 +267,7 @@
                             toastr.success(response.message);
                         },
                         error: function(xhr, status, error) {
-                            let errorMessage = xhr.responseJson.message;
+                            let errorMessage = xhr.responseJSON.message;
                             hideLoader();
                             toastr.error(errorMessage);
                         },
@@ -313,7 +313,7 @@
                             toastr.success(response.message);
                         },
                         error: function(xhr, status, error){
-                            let errorMessage = xhr.responseJson.message;
+                            let errorMessage = xhr.responseJSON.message;
                             hideLoader();
                             toastr.error(errorMessage);
                         },
@@ -341,7 +341,7 @@
                             toastr.success(response.message);
                         },
                         error: function(xhr, status, error){
-                            let errorMessage = xhr.responseJson.message;
+                            let errorMessage = xhr.responseJSON.message;
                             hideLoader();
                             toastr.error(errorMessage);
                         },
