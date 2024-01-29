@@ -34,7 +34,7 @@ class DashboardController extends Controller
 
         toastr()->success('Created Successfully!');
 
-        return to_route('admin.dashboard');
+        return redirect()->back();
     }
 
     function updateAddress(string $id, AddressUpdateRequest $request)
@@ -52,7 +52,7 @@ class DashboardController extends Controller
 
         toastr()->success('Updated Successfully!');
 
-        return to_route('admin.dashboard');
+        return to_route('dashboard');
     }
 
     function destroyAddress(string $id)
