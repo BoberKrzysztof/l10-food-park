@@ -29,6 +29,7 @@ class PaymentGatewaySettingController extends Controller
             'paypal_rate' => ['required', 'numeric'],
             'paypal_api_key' => ['required'],
             'paypal_secret_key' => ['required'],
+            'paypal_app_id' => ['required'],
         ]);
 
         if ($request->hasFile('paypal_logo')) {
@@ -39,6 +40,43 @@ class PaymentGatewaySettingController extends Controller
             $imagePath = $this->uploadImage($request, 'paypal_logo');
             PaymentGatewaySetting::updateOrCreate(
                 ['key' => 'paypal_logo'],
+                ['value' => $imagePath]
+            );
+        }
+
+        foreach($validatedData as $key => $value){
+            PaymentGatewaySetting::updateOrCreate(
+                ['key' => $key],
+                ['value' => $value]
+            );
+        }
+
+        $paymentGatewaySettingServie = app(PaymentGatewaySettingService::class);
+        $paymentGatewaySettingServie->clearCachedSettings();
+
+        toastr()->success('Updated Successfully!');
+        return redirect()->back();
+    }
+
+    function stripeSettingUpdate(Request $request)
+    {
+        $validatedData = $request->validate([
+            'stripe_status' => ['required', 'boolean'],
+            'stripe_country' => ['required'],
+            'stripe_currency' => ['required'],
+            'stripe_rate' => ['required', 'numeric'],
+            'stripe_api_key' => ['required'],
+            'stripe_secret_key' => ['required'],
+        ]);
+
+        if ($request->hasFile('stripe_logo')) {
+            $request->validate([
+                'paypal_logo' => ['nullable', 'image']
+            ]);
+
+            $imagePath = $this->uploadImage($request, 'stripe_logo');
+            PaymentGatewaySetting::updateOrCreate(
+                ['key' => 'stripe_logo'],
                 ['value' => $imagePath]
             );
         }
