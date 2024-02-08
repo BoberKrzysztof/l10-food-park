@@ -71,12 +71,49 @@ class PaymentGatewaySettingController extends Controller
 
         if ($request->hasFile('stripe_logo')) {
             $request->validate([
-                'paypal_logo' => ['nullable', 'image']
+                'stripe_logo' => ['nullable', 'image']
             ]);
 
             $imagePath = $this->uploadImage($request, 'stripe_logo');
             PaymentGatewaySetting::updateOrCreate(
                 ['key' => 'stripe_logo'],
+                ['value' => $imagePath]
+            );
+        }
+
+        foreach($validatedData as $key => $value){
+            PaymentGatewaySetting::updateOrCreate(
+                ['key' => $key],
+                ['value' => $value]
+            );
+        }
+
+        $paymentGatewaySettingServie = app(PaymentGatewaySettingService::class);
+        $paymentGatewaySettingServie->clearCachedSettings();
+
+        toastr()->success('Updated Successfully!');
+        return redirect()->back();
+    }
+
+    function razorpaySettingUpdate(Request $request)
+    {
+        $validatedData = $request->validate([
+            'razorpay_status' => ['required', 'boolean'],
+            'razorpay_country' => ['required'],
+            'razorpay_currency' => ['required'],
+            'razorpay_rate' => ['required', 'numeric'],
+            'razorpay_api_key' => ['required'],
+            'razorpay_secret_key' => ['required'],
+        ]);
+
+        if ($request->hasFile('razorpay_logo')) {
+            $request->validate([
+                'razorpay_logo' => ['nullable', 'image']
+            ]);
+
+            $imagePath = $this->uploadImage($request, 'razorpay_logo');
+            PaymentGatewaySetting::updateOrCreate(
+                ['key' => 'razorpay_logo'],
                 ['value' => $imagePath]
             );
         }

@@ -12,14 +12,6 @@
                 </select>
             </div>
 
-            {{-- <div class="form-group">
-                <label for="">Stripe Account Mode</label>
-                <select name="paypal_account_mode" class="select2 form-control" id="">
-                    <option @selected($paymentGateway['paypal_account_mode'] === 'sandbox') value="sandbox">Sandbox</option>
-                    <option @selected($paymentGateway['paypal_account_mode'] === 'live') value="live">Live</option>
-                </select>
-            </div> --}}
-
             <div class="form-group">
                 <label for="">Stripe Country Name</label>
                 <select name="stripe_country" class="select3 form-control" id="">
