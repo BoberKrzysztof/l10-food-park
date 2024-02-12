@@ -67,8 +67,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         ->name('orders.index');
     Route::get('orders/{id}', [OrderController::class, 'show'])
         ->name('orders.show');
+    Route::get('orders/status/{id}', [OrderController::class, 'getOrderStatus'])
+        ->name('orders.status');
     Route::put('orders/status-update/{id}', [OrderController::class, 'orderStatusUpdate'])
         ->name('orders.status-update');
+    Route::delete('orders/{id}', [OrderController::class, 'destroy'])
+        ->name('orders.destroy');
 
     /** Payment Gateway Setting Routes */
     Route::get('/payment-gateway-setting', [PaymentGatewaySettingController::class, 'index'])
