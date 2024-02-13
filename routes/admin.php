@@ -67,6 +67,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         ->name('orders.index');
     Route::get('orders/{id}', [OrderController::class, 'show'])
         ->name('orders.show');
+    Route::get('pending-orders', [OrderController::class, 'pendingOrderIndex'])
+        ->name('pending-orders');
+    Route::get('inprocess-orders', [OrderController::class, 'inprocessOrderIndex'])
+        ->name('inprocess-orders');
+    Route::get('delivered-orders', [OrderController::class, 'deliveredOrderIndex'])
+        ->name('delivered-orders');
+    Route::get('declined-orders', [OrderController::class, 'declinedOrderIndex'])
+        ->name('declined-orders');
     Route::get('orders/status/{id}', [OrderController::class, 'getOrderStatus'])
         ->name('orders.status');
     Route::put('orders/status-update/{id}', [OrderController::class, 'orderStatusUpdate'])

@@ -94,7 +94,9 @@
 
                                     $qty = $orderItem->qty;
                                     $unitPrice = $orderItem->unit_price;
-                                    $sizePrice = $size->price;
+                                    $sizePrice = isset($size->price) ? $size->price : 0;
+
+                                    // $sizePrice = $size->price;
                                     $optionPrice = 0;
                                     foreach ($options as $optionItem) {
                                         $optionPrice += $optionItem->price;
