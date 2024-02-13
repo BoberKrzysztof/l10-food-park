@@ -200,9 +200,10 @@
             printWindow.document.write('</body></html>');
             printWindow.document.close();
 
-            printWindow.print();
-            printWindow.close();
-
+            setTimeout(() => {
+                printWindow.print();
+                printWindow.close();
+            }, 100);
         })
     })
 </script>
