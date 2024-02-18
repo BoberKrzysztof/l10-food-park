@@ -118,8 +118,4 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('stripe/cancel', [PaymentController::class, 'stripeCancel'])
         ->name('stripe.cancel');
 
-    Route::get('test', function(){
-        $order = Order::first();
-        RTOrderPlacedNotificationEvent::dispatch($order);
-    });
 });

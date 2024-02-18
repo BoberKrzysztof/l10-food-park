@@ -44,4 +44,5 @@ window.Echo.channel('order-placed')
                         </div>
                     </a>`;
         $('.rt_notification').prepend(html);
+        $('.notification_beep').addClass('beep');
     });

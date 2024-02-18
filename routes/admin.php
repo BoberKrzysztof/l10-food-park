@@ -82,6 +82,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::delete('orders/{id}', [OrderController::class, 'destroy'])
         ->name('orders.destroy');
 
+    /** Order Notification Routes */
+    Route::get('clear-notification', [AdminDashboardController::class, 'clearNotification'])
+        ->name('clear-notification');
+
     /** Payment Gateway Setting Routes */
     Route::get('/payment-gateway-setting', [PaymentGatewaySettingController::class, 'index'])
         ->name('payment-setting.index');
